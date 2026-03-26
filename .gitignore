@@ -1,0 +1,8 @@
+# Environment Variables
+bot/.env
+
+# Python Cache
+bot/__pycache__/
+
+# Virtual Environment
+bot/trade_env/
