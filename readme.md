@@ -14,7 +14,7 @@ A Python CLI application for placing orders on Binance Futures Testnet (USDT-M) 
 
 ### 1. Clone Repository
 ```bash
-git clone &lt;your-repo-url&gt;
+git clone &lt;[your-repo-url](https://github.com/RO45Y/Binance-futures-trading-bot)&gt;
 cd trade_bot
 
 ### 2. Create Virtual Environment
