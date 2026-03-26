@@ -10,93 +10,125 @@ A Python CLI application for placing orders on Binance Futures Testnet (USDT-M) 
 - Structured logging to file
 - Clean separation of concerns (API layer + CLI layer)
 
-## Setup
+
+
+## 📦 Setup Instructions
 
 ### 1. Clone Repository
 ```bash
-git clone &lt;[your-repo-url](https://github.com/RO45Y/Binance-futures-trading-bot)&gt;
+git clone https://github.com/RO45Y/Binance-futures-trading-bot.git
 cd trade_bot
+```
 
 ### 2. Create Virtual Environment
 ```bash
 python -m venv trade_env
+```
 
 ### 3. Activate Virtual Environment
-```Windows
+
+**Windows**
+```bash
 trade_env\Scripts\activate
+```
 
-```mac/Linux
+**macOS / Linux**
+```bash
 source trade_env/bin/activate
-
+```
 
 ### 4. Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
 ### 5. Configure API Keys
 
-Create bot/.env file:
+Create a `.env` file inside the `bot/` folder:
+
+```env
 BINANCE_API_KEY=your_testnet_api_key_here
 BINANCE_API_SECRET=your_testnet_api_secret_here
+```
 
-1. Get Testnet API Keys:
-2. Go to https://testnet.binancefuture.com
-3. Register and activate account
-4. Go to API Management
-5. Create new API key
+#### 🔑 Get Testnet API Keys
+1. Go to https://testnet.binancefuture.com  
+2. Register and activate your account  
+3. Navigate to API Management  
+4. Create a new API key  
 
+---
 
-### Usage
+## ⚙️ Usage
 
-1. Place Market Order
+### 📌 Place Market Order
+```bash
 python -m bot.cli place -s ETHUSDT --side BUY -t MARKET -q 0.02
+```
 
-2. Place Limit Order
+### 📌 Place Limit Order
+```bash
 python -m bot.cli place -s ETHUSDT --side BUY -t LIMIT -q 0.02 -p 2000
+```
 
-3. Place Stop-Limit Order (Bonus)
+### 📌 Place Stop-Limit Order
+```bash
 python -m bot.cli place -s ETHUSDT --side SELL -t STOP-LIMIT -q 0.02 -p 1790 --stop-price 1800
+```
 
-4. Check Account Balance
+### 📌 Check Account Balance
+```bash
 python -m bot.cli balance
+```
 
+---
 
-
-
-CLI Options
+## 🧩 CLI Options
 
 | Option         | Short | Description                                  | Required            |
-| -------------- | ----- | -------------------------------------------- | ------------------- |
-| `--symbol`     | `-s`  | Trading pair (e.g., BTCUSDT, ETHUSDT)        | Yes                 |
-| `--side`       |       | BUY or SELL                                  | Yes                 |
-| `--type`       | `-t`  | MARKET, LIMIT, or STOP-LIMIT                 | Yes                 |
-| `--qty`        | `-q`  | Order quantity                               | Yes                 |
-| `--price`      | `-p`  | Price (required for LIMIT and STOP-LIMIT)    | For LIMIT/STOPLIMIT |
-| `--stop-price` |       | Stop trigger price (required for STOP-LIMIT) | For STOPLIMIT       |
+|----------------|------|----------------------------------------------|---------------------|
+| --symbol       | -s   | Trading pair (e.g., BTCUSDT, ETHUSDT)        | Yes                 |
+| --side         |      | BUY or SELL                                  | Yes                 |
+| --type         | -t   | MARKET, LIMIT, STOP-LIMIT                    | Yes                 |
+| --qty          | -q   | Order quantity                               | Yes                 |
+| --price        | -p   | Price (for LIMIT & STOP-LIMIT)               | Conditional         |
+| --stop-price   |      | Stop trigger price (for STOP-LIMIT)          | Conditional         |
 
+---
 
-Project Structure
+## 📁 Project Structure
 
+```
 trade_bot/
 ├── bot/
 │   ├── __init__.py
-│   ├── client.py          # Binance API wrapper
-│   ├── orders.py          # Order placement logic
-│   ├── validators.py      # Input validation
-│   ├── logging_config.py  # Logging setup
-│   ├── cli.py             # CLI entry point
-│   └── .env               # API credentials (ignored by git)
-├── trade_env/             # Virtual environment
+│   ├── client.py
+│   ├── orders.py
+│   ├── validators.py
+│   ├── logging_config.py
+│   ├── cli.py
+│   └── .env
+├── trade_env/
 ├── .gitignore
 ├── requirements.txt
 └── README.md
+```
 
+---
 
-Comman Errors:
+## ⚠️ Common Errors & Fixes
 
 | Error                                         | Solution                                                        |
-| --------------------------------------------- | --------------------------------------------------------------- |
-| `Invalid API-key, IP, or permissions`         | Whitelist your IP in Binance API settings or use "Unrestricted" |
-| `Limit price can't be higher than X`          | Set limit price below current market price for BUY orders       |
-| `Order's notional must be no smaller than 20` | Increase quantity or price to reach 20 USDT minimum             |
-| `Precision is over the maximum`               | Reduce quantity decimal places (e.g., 0.001 instead of 0.0001)  |
-| `ImportError: No module named 'bot'`          | Run from root `trading_bot/` folder, use `python -m bot.cli`    |
+|----------------------------------------------|-----------------------------------------------------------------|
+| Invalid API-key, IP, or permissions           | Whitelist IP or set API restrictions to Unrestricted           |
+| Limit price can't be higher than X            | Set lower price for BUY orders                                 |
+| Order's notional must be no smaller than 20   | Increase quantity or price (min 20 USDT)                       |
+| Precision is over the maximum                 | Reduce decimal places                                          |
+| ImportError: No module named 'bot'            | Run from root folder using python -m bot.cli                  |
+
+---
+
+## 💡 Notes
+- Use Binance Testnet for testing  
+- Never expose your API keys  
+- .env file should be added to .gitignore  
